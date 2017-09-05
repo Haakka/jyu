@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+	<diskStore path="d:\cache\crm"/>
+	
+	<cache name="com.crm.entity.Authorities"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Roles"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.RolesAuthorities"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.UsersRoles"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Users"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+			
+
+	<cache name="com.crm.entity.Area"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.City"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Province"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+	<cache name="com.crm.entity.Business"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Contact"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Contract"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		<cache name="com.crm.entity.Follow"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+	<cache name="com.crm.entity.Department"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Position"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+		
+	<cache name="com.crm.entity.SysParam"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.SysParamType"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+		
+	<cache name="com.crm.entity.Even"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Note"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.News"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+	<cache name="com.crm.entity.Invoice"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+		
+	<cache name="com.crm.entity.LoginLog"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Order"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.OrderDetail"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.PersonMail"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+	<cache name="com.crm.entity.Product"
+		maxElementsInMemory="500" overflowToDisk="true" eternal="true" />
+
+	<defaultCache maxElementsInMemory="100000" overflowToDisk="true" eternal="false"
+		memoryStoreEvictionPolicy="LRU" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="1000"
+		timeToIdleSeconds="3600" timeToLiveSeconds="3600" diskPersistent="false" />
+
+</ehcache>

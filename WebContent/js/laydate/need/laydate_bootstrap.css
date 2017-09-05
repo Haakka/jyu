@@ -1,0 +1,31 @@
+.laydate_body .laydate_top {
+height: 35px;
+}
+
+.laydate_body .laydate_ym {
+height: 26px;
+}
+
+.laydate_body .laydate_y .laydate_yms {
+width: 122px;
+}
+
+.laydate_body .laydate_bottom {
+height: 30px;
+}
+
+.laydate_body .laydate_table {
+width: 228px;
+}
+
+.laydate_body .laydate_y {
+margin-right: 8px;
+}
+
+.laydate-icon, .laydate-icon-default, .laydate-icon-danlan, .laydate-icon-dahong, .laydate-icon-molv {
+height: 25px;
+}
+
+.bootstrap_from_laydate{
+	height: 30px;
+}

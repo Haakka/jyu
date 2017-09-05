@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+	
+	<!-- dao配置 -->
+    <bean id="productDao" class="com.crm.dao.product.ProductDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+ 	<!-- mgr配置 -->
+    <bean id="productService" class="com.crm.service.product.ProductServiceImpl">
+        <property name="productDao" ref="productDao"></property>
+    </bean>
+    
+    <!-- action配置 -->
+    <bean id="productAction" class="com.crm.web.cusman.ProductAction" scope="prototype">
+         <property name="productService" ref="productService"></property>
+         <property name="sysParamService" ref="sysParamService"></property>
+    </bean>
+
+</beans>

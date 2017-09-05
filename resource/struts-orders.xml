@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/jsp/" />
+	
+	<package name="ep_orders" extends="struts-default" namespace="/">
+		
+		<interceptors>
+			<interceptor name="authority" class="com.modules.security.AuthorityIntercept">
+			</interceptor>
+			
+			<interceptor-stack name="author">
+				<interceptor-ref name="authority"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="author"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+		</global-results>
+		
+		<action name="orderAction" class="orderAction">
+			<result>/WEB-INF/jsp/enterprise/orders/order.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/orders/order_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/orders/order_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/orders/order_new.jsp</result>
+			<result name="edit_success" type="redirect">orderAction!retrieveAllOrders.action</result>
+			<result name="trash">/WEB-INF/jsp/enterprise/trash/order_trash.jsp</result>
+			<result name="export">/WEB-INF/jsp/enterprise/orders/order_export.jsp</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		<action name="contractAction" class="contractAction">
+			<result>/WEB-INF/jsp/enterprise/orders/contract.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/orders/contract_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/orders/contract_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/orders/contract_new.jsp</result>
+			<result name="edit_success" type="redirect">contractAction!retrieveAllContracts.action</result>
+			<result name="trash">/WEB-INF/jsp/enterprise/trash/contract_trash.jsp</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+	</package>	
+</struts>

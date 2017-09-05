@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+
+	<!-- dao配置 -->
+	<bean id="baseDao" class="com.crm.bases.BaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="usersDao" class="com.crm.dao.system.UsersDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+    <bean id="rolesDao" class="com.crm.dao.system.RolesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="usersRolesDao" class="com.crm.dao.system.UsersRolesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="rolesAuthoritiesDao" class="com.crm.dao.system.RolesAuthoritiesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="authoritiesDao" class="com.crm.dao.system.AuthoritiesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="sysParamTypeDao" class="com.crm.dao.system.SysParamTypeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="sysParamDao" class="com.crm.dao.system.SysParamDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="loginLogDao" class="com.crm.dao.system.LoginLogDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    	
+ 	<!-- mgr配置 -->
+ 	<bean id="baseManagerDao" class="com.crm.bases.BaseManagerDaoImpl">
+ 		<property name="baseDao" ref="baseDao"></property>
+ 	</bean>
+ 	
+    <bean id="usersManagerDao" class="com.crm.service.system.UsersManagerDaoImpl">
+    	<property name="usersDao" ref="usersDao"></property>
+    	<property name="rolesDao" ref="rolesDao"></property>
+    	<property name="usersRolesDao" ref="usersRolesDao"></property>
+    	<property name="rolesAuthoritiesDao" ref="rolesAuthoritiesDao"></property>
+    	<property name="authoritiesDao" ref="authoritiesDao"></property>
+    </bean>
+    <bean id="rolesManagerDao" class="com.crm.service.system.RolesManagerDaoImpl">
+    	<property name="rolesDao" ref="rolesDao"></property>
+    	<property name="rolesAuthoritiesDao" ref="rolesAuthoritiesDao"></property>
+    	<property name="authoritiesDao" ref="authoritiesDao"></property>
+    </bean>
+    <bean id="usersRolesManagerDao" class="com.crm.service.system.UsersRolesManagerDaoImpl">
+    	<property name="usersRolesDao" ref="usersRolesDao"></property>
+    </bean>
+    <bean id="authoritiesManagerDao" class="com.crm.service.system.AuthoritiesManagerDaoImpl">
+    	<property name="authoritiesDao" ref="authoritiesDao"></property>
+    	<property name="rolesAuthoritiesDao" ref="rolesAuthoritiesDao"></property>
+    </bean>
+    <bean id="rolesAuthoritiesManagerDao" class="com.crm.service.system.RolesAuthoritiesManagerDaoImpl">
+    	<property name="rolesAuthoritiesDao" ref="rolesAuthoritiesDao"></property>
+    	<property name="authoritiesDao" ref="authoritiesDao"></property>
+    </bean>
+    <bean id="sysParamTypeService" class="com.crm.service.system.SysParamTypeServiceImpl">
+        <property name="sysParamTypeDao" ref="sysParamTypeDao"></property>
+    </bean>
+    <bean id="sysParamService" class="com.crm.service.system.SysParamServiceImpl">
+        <property name="sysParamDao" ref="sysParamDao"></property>
+    </bean>
+     <bean id="loginLogManagerDao" class="com.crm.service.system.LoginLogManagerDaoImpl">
+        <property name="loginLogDao" ref="loginLogDao"></property>
+    </bean>
+  
+    <!-- action配置 -->
+    <bean id="baseManagerAction" class="com.crm.bases.BaseManagerAction" scope="prototype">
+    	<property name="baseManagerDao" ref="baseManagerDao"></property>
+    </bean>
+    
+    <bean id="loginAction" class="com.crm.web.system.LoginAction" scope="prototype">
+		<property name="usersManagerDao" ref="usersManagerDao"></property>
+		<property name="loginLogManagerDao" ref="loginLogManagerDao"></property>
+    </bean>
+    
+    <bean id="usersAction" class="com.crm.web.system.UsersAction" scope="prototype">
+        <property name="usersManagerDao" ref="usersManagerDao"></property>
+        <property name="rolesManagerDao" ref="rolesManagerDao"></property>
+        <property name="usersRolesManagerDao" ref="usersRolesManagerDao"></property>
+        <property name="positionService" ref="positionService"></property>
+    </bean>
+    
+    <bean id="rolesAction" class="com.crm.web.system.RolesAction" scope="prototype">
+        <property name="rolesManagerDao" ref="rolesManagerDao"></property>
+   		<property name="authoritiesManagerDao" ref="authoritiesManagerDao"></property>
+   		<property name="rolesAuthoritiesManagerDao" ref="rolesAuthoritiesManagerDao"></property>
+    </bean>
+    
+    <bean id="authoritiesAction" class="com.crm.web.system.AuthoritiesAction" scope="prototype">
+        <property name="authoritiesManagerDao" ref="authoritiesManagerDao"></property>
+    </bean>
+    
+    <bean id="updatePasswordAction" class="com.crm.web.system.UpdatePasswordAction" scope="prototype">
+    	<property name="usersManagerDao" ref="usersManagerDao"></property>
+    </bean>
+    
+      <bean id="userDetailsService" class="com.modules.security.UserDetailServiceImpl">
+    	<property name="usersManagerDao" ref="usersManagerDao" />
+    </bean>
+    
+    <bean id="defaultAction" class="com.crm.web.DefaultAction" scope="prototype">
+    	<property name="usersManagerDao" ref="usersManagerDao"></property>
+    	<property name="consumerService" ref="consumerService"></property>
+    	<property name="followService" ref="followService"></property>
+    	<property name="businessService" ref="businessService"></property>
+    </bean>
+    
+     <bean id="sysParamTypeAction" class="com.crm.web.cusman.SysParamTypeAction" scope="prototype">
+         <property name="sysParamTypeService" ref="sysParamTypeService"></property>
+    </bean>
+    <bean id="sysParamAction" class="com.crm.web.cusman.SysParamAction" scope="prototype">
+         <property name="sysParamService" ref="sysParamService"></property>
+    </bean>
+    
+</beans>

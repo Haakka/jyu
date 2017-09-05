@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/jsp/" />
+	
+	<!-- 国际化 -->
+	<constant name="struts.custom.i18n.resources" value="com.modules.resources.message" />
+
+	<include file="struts-ajax.xml"></include>
+	<include file="struts-front.xml"></include>
+	<include file="struts-system.xml"></include>
+	<include file="struts-cusman.xml"></include>
+	<include file="struts-data.xml"></include>
+	<include file="struts-news.xml"></include>
+	<include file="struts-orders.xml"></include>
+	<include file="struts-product.xml"></include>
+	<include file="struts-personal.xml"></include>
+	
+	<package name="default" extends="struts-default" namespace="/">
+
+		<interceptors>
+			<interceptor name="authority" class="com.modules.security.AuthorityIntercept">
+			</interceptor>
+			
+			<interceptor-stack name="author">
+				<interceptor-ref name="authority"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="author"></default-interceptor-ref>
+		
+		<global-results>
+			<!-- 下面定义的结果对所有的Action都有效 -->
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+			<result name="exception">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+
+		<!-- 自定义错误拦截器开始 -->
+		<global-exception-mappings>
+			<exception-mapping result="exception"
+				exception="com.modules.security.AuthorityIntercept">
+			</exception-mapping>
+		</global-exception-mappings>
+		<!-- 自定义错误拦截器结束 -->
+			
+		<action name="defaultAction" class="defaultAction">
+			<result>/WEB-INF/jsp/default.jsp</result>
+		</action>
+		<action name="login_index">
+			<result>/WEB-INF/jsp/login.jsp</result>
+		</action>	
+
+		<action name="*leftFrame">
+			<result>/WEB-INF/jsp/left/{1}/left.jsp</result>
+		</action>
+	</package>
+
+
+</struts>

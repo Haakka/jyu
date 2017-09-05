@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+	
+	<!-- dao配置 -->
+    <bean id="personMailDao" class="com.crm.dao.personal.PersonMailDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="evenDao" class="com.crm.dao.personal.EvenDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="noteDao" class="com.crm.dao.personal.NoteDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="mailReceiveDao" class="com.crm.dao.personal.MailReceiveDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+ 	<!-- mgr配置 -->
+    <bean id="personMailService" class="com.crm.service.personal.PersonMailServiceImpl">
+        <property name="personMailDao" ref="personMailDao"></property>
+    </bean>
+    <bean id="evenService" class="com.crm.service.personal.EvenServiceImpl">
+        <property name="evenDao" ref="evenDao"></property>
+    </bean>
+    <bean id="noteService" class="com.crm.service.personal.NoteServiceImpl">
+        <property name="noteDao" ref="noteDao"></property>
+    </bean>
+    <bean id="mailReceiveService" class="com.crm.service.personal.MailReceiveServiceImpl">
+        <property name="mailReceiveDao" ref="mailReceiveDao"></property>
+    </bean>
+    
+    <!-- action配置 -->
+    <bean id="personMailAction" class="com.crm.web.cusman.PersonMailAction" scope="prototype">
+         <property name="personMailService" ref="personMailService"></property>
+    </bean>
+    <bean id="evenAction" class="com.crm.web.cusman.EvenAction" scope="prototype">
+         <property name="evenService" ref="evenService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+         <property name="contactService" ref="contactService"></property>
+    </bean>
+    <bean id="noteAction" class="com.crm.web.cusman.NoteAction" scope="prototype">
+         <property name="noteService" ref="noteService"></property>
+    </bean>
+    <bean id="mailReceiveAction" class="com.crm.web.cusman.MailReceiveAction" scope="prototype">
+         <property name="mailReceiveService" ref="mailReceiveService"></property>
+    </bean>
+
+</beans>

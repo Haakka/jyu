@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-2.5.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" 
+	default-lazy-init="false">
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="locations">
+    		<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 扫描annotation类，过滤Service，Repository -->
+	<context:component-scan base-package="com">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" 
+            destroy-method="close">
+    		<property name="DriverClassName" value="${jdbc.driverClassName}"></property>
+            <property name="url" value="${jdbc.url}"></property>
+            <property name="username" value="${jdbc.username}"></property>
+            <property name="password" value="${jdbc.password}"></property>
+            <property name="validationQuery" value="SELECT 'x'" />
+           <!--  <property name="connectionProperties" value="config.decrypt=true"/> -->
+            <property name="filters" value="stat,wall" /><!-- stat,wall,config配置 -->
+           <!--  配置初始化大小、最小、最大 -->
+		    <property name="initialSize" value="100" />
+		    <property name="minIdle" value="100" /> 
+		    <property name="maxActive" value="2000" />
+		    <!-- 配置获取连接等待超时的时间 -->
+      		<property name="maxWait" value="60000" />
+      		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+      		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+	       <!-- 	配置一个连接在池中最小生存的时间，单位是毫秒 -->
+	       	<property name="minEvictableIdleTimeMillis" value="30000" />
+	      	<property name="testWhileIdle" value="true" />
+	      	<property name="testOnBorrow" value="false" />
+	      	<property name="testOnReturn" value="false" />
+	      	<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+	      	<property name="poolPreparedStatements" value="true" />
+	      	<property name="maxPoolPreparedStatementPerConnectionSize" value="200" />
+    </bean>
+	
+	<!-- Hibernate配置 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			     <prop key="hibernate.hbm2ddl.auto">none</prop>
+				 <prop key="hibernate.show_sql">false</prop>   
+				 <prop key="hibernate.format_sql">false</prop> 
+				 
+				 <prop key="hibernate.cache.use_query_cache">true</prop>
+				 <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				 <prop key="cache.use_second_level_cache">true</prop><!-- 启用二级缓存 -->  
+				 <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache-hibernate.xml</prop>
+				 
+				 <!-- 释放连接池 -->
+				 <prop key="hibernate.connection.release_mode">auto</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list><value>classpath:com/crm/entity/xml/*.hbm.xml</value></list>
+		</property>
+	</bean>
+	
+	<!-- 配置事务管理 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	
+	<!-- 声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="sure*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="send*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="REQUIRED" />
+			<tx:method name="retrieve*" propagation="REQUIRED" />
+			<tx:method name="import*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 只对业务逻辑层实施事务 -->
+		<aop:pointcut id="txPointcut"
+			expression="execution(* com.crm.service..*.*(..))" />
+
+		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
+		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
+		
+	</aop:config>
+	
+</beans>

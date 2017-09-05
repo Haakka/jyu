@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+	
+	<!-- dao配置 -->
+    <bean id="businessDao" class="com.crm.dao.cusman.BusinessDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="consumerDao" class="com.crm.dao.cusman.ConsumerDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="followDao" class="com.crm.dao.cusman.FollowDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="contactDao" class="com.crm.dao.cusman.ContactDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="invoiceDao" class="com.crm.dao.cusman.InvoiceDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="receivingDao" class="com.crm.dao.cusman.ReceivingDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+
+ 	<!-- mgr配置 -->
+    <bean id="businessService" class="com.crm.service.cusman.BusinessServiceImpl">
+        <property name="businessDao" ref="businessDao"></property>
+    </bean>
+     <bean id="consumerService" class="com.crm.service.cusman.ConsumerServiceImpl">
+        <property name="consumerDao" ref="consumerDao"></property>
+        <property name="sysParamDao" ref="sysParamDao"></property>
+    </bean>
+    <bean id="followService" class="com.crm.service.cusman.FollowServiceImpl">
+        <property name="followDao" ref="followDao"></property>
+    </bean>
+    <bean id="contactService" class="com.crm.service.cusman.ContactServiceImpl">
+        <property name="contactDao" ref="contactDao"></property>
+    </bean>
+     <bean id="invoiceService" class="com.crm.service.cusman.InvoiceServiceImpl">
+        <property name="invoiceDao" ref="invoiceDao"></property>
+    </bean>
+    <bean id="receivingService" class="com.crm.service.cusman.ReceivingServiceImpl">
+        <property name="receivingDao" ref="receivingDao"></property>
+    </bean>
+    
+   
+    
+    <!-- action配置 -->
+    <bean id="businessAction" class="com.crm.web.cusman.BusinessAction" scope="prototype">
+         <property name="businessService" ref="businessService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+         <property name="sysParamService" ref="sysParamService"></property>
+         <property name="contactService" ref="contactService"></property>
+    </bean>
+     <bean id="consumerAction" class="com.crm.web.cusman.ConsumerAction" scope="prototype">
+         <property name="consumerService" ref="consumerService"></property>
+         <property name="sysParamService" ref="sysParamService"></property>
+    </bean>
+     <bean id="followAction" class="com.crm.web.cusman.FollowAction" scope="prototype">
+         <property name="followService" ref="followService"></property>
+         <property name="businessService" ref="businessService"></property>
+         <property name="sysParamService" ref="sysParamService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+    </bean>
+     <bean id="contactAction" class="com.crm.web.cusman.ContactAction" scope="prototype">
+         <property name="contactService" ref="contactService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+    </bean>
+    <bean id="invoiceAction" class="com.crm.web.cusman.InvoiceAction" scope="prototype">
+         <property name="invoiceService" ref="invoiceService"></property>
+          <property name="consumerService" ref="consumerService"></property>
+         <property name="orderService" ref="orderService"></property>
+    </bean>
+    <bean id="receivingAction" class="com.crm.web.cusman.ReceivingAction" scope="prototype">
+         <property name="receivingService" ref="receivingService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+         <property name="orderService" ref="orderService"></property>
+    </bean>
+
+ 	
+   
+    
+    
+
+</beans>

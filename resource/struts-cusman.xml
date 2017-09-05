@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/jsp/" />
+	
+	<package name="ep_cusman" extends="struts-default" namespace="/">
+		
+		<interceptors>
+			<interceptor name="authority" class="com.modules.security.AuthorityIntercept">
+			</interceptor>
+			
+			<interceptor-stack name="author">
+				<interceptor-ref name="authority"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="author"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+		</global-results>
+		
+		<action name="businessAction" class="businessAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/business.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/business_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/business_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/business_new.jsp</result>
+			<result name="edit_success" type="redirect">businessAction!retrieveAllBusinesss.action</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		
+		<action name="consumerAction" class="consumerAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/consumer.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/consumer_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/consumer_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/consumer_new.jsp</result>
+			<result name="edit_success" type="redirect">consumerAction!retrieveAllConsumers.action</result>
+			<result name="trash">/WEB-INF/jsp/enterprise/trash/consumer_trash.jsp</result>
+			<result name="export">/WEB-INF/jsp/enterprise/cusman/consumer_export.jsp</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		<action name="followAction" class="followAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/follow.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/follow_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/follow_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/follow_new.jsp</result>
+			<result name="edit_success" type="redirect">followAction!retrieveAllFollows.action</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		<action name="contactAction" class="contactAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/contact.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/contact_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/contact_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/contact_new.jsp</result>
+			<result name="edit_success" type="redirect">contactAction!retrieveAllContacts.action</result>
+			<result name="trash">/WEB-INF/jsp/enterprise/trash/contact_trash.jsp</result>
+			<result name="export">/WEB-INF/jsp/enterprise/cusman/contact_export.jsp</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		
+			<action name="evenAction" class="evenAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/even.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/even_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/even_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/even_new.jsp</result>
+			<result name="edit_success" type="redirect">evenAction!retrieveAllEvens.action</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>
+		
+		<action name="invoiceAction" class="invoiceAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/invoice.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/invoice_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/invoice_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/invoice_new.jsp</result>
+			<result name="edit_success" type="redirect">invoiceAction!retrieveAllInvoices.action</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		
+		<action name="receivingAction" class="receivingAction">
+			<result>/WEB-INF/jsp/enterprise/cusman/receiving.jsp</result>
+			<result name="viewPage">/WEB-INF/jsp/enterprise/cusman/receiving_view.jsp</result>
+			<result name="editPage">/WEB-INF/jsp/enterprise/cusman/receiving_edit.jsp</result>
+			<result name="newPage">/WEB-INF/jsp/enterprise/cusman/receiving_new.jsp</result>
+			<result name="edit_success" type="redirect">receivingAction!retrieveAllReceivings.action</result>
+			<result name="export">/WEB-INF/jsp/enterprise/cusman/receiving_export.jsp</result>
+			
+			<!-- 防止重复提交 -->
+            <result name="invalid.token">/WEB-INF/jsp/error_double_click.jsp</result>
+           	<interceptor-ref name="author"></interceptor-ref>
+          	<interceptor-ref name="token">
+            	<!-- includeMethods表示包含指定的方法， 即对标记为includeMethods的方法进行拦截 -->
+                <param name="includeMethods">add,update</param>
+            	<!-- 定义被排除的方法名， 也就是你action中不被这个拦截器拦截的方法名 -->
+               	<param name="excludeMethods"></param>
+            </interceptor-ref>
+			
+		</action>	
+		
+		
+		
+	</package>	
+</struts>

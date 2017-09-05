@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.crm.entity.Invoice" table="crm_invoice">
+        
+        <!-- 
+       <cache usage="read-write"/>
+        -->
+        
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+         <many-to-one name="userId" class="com.crm.entity.Users" fetch="select" lazy="false">
+        	<column name="USER_ID" not-null="true">
+            </column>
+        </many-to-one>
+        <many-to-one name="orderId" class="com.crm.entity.Order" fetch="select" lazy="false">
+        	<column name="ORDER_ID" not-null="true">
+            </column>
+        </many-to-one>
+        <property name="num" type="java.lang.String">
+            <column name="NUM" length="100">
+            </column>
+        </property>
+        <property name="code" type="java.lang.String">
+            <column name="CODE" length="50">
+            </column>
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="TYPE" length="1">
+            </column>
+        </property>
+         <property name="amount" type="java.math.BigDecimal">
+            <column name="AMOUNT" precision="20" scale="2">
+            </column>
+        </property>
+         <property name="addTime" type="java.util.Date">
+            <column name="ADD_TIME" length="19">
+            </column>
+        </property>
+        <property name="startDate" type="java.util.Date">
+            <column name="STRAT_DATE" length="19">
+            </column>
+        </property>
+         <property name="isDel" type="java.lang.String">
+            <column name="IS_DEL" length="1">
+            </column>
+        </property>
+         <property name="payer" type="java.lang.String">
+            <column name="PAYER" length="100">
+            </column>
+        </property>
+        <property name="payerAddress" type="java.lang.String">
+            <column name="PAYER_ADDRESS" length="250">
+            </column>
+        </property>
+         <property name="payerTel" type="java.lang.String">
+            <column name="PAYER_TEL" length="20">
+            </column>
+        </property>
+         <property name="payerBank" type="java.lang.String">
+            <column name="PAYER_BANK" length="100">
+            </column>
+        </property>
+         <property name="payerAcount" type="java.lang.String">
+            <column name="PAYER_ACOUNT" length="100">
+            </column>
+        </property>
+        
+         <property name="receiver" type="java.lang.String">
+            <column name="RECEIVER" length="100">
+            </column>
+        </property>
+        <property name="receiverAdderss" type="java.lang.String">
+            <column name="RECEIVER_ADDRESS" length="250">
+            </column>
+        </property>
+         <property name="receiverTel" type="java.lang.String">
+            <column name="RECEIVER_TEL" length="20">
+            </column>
+        </property>
+         <property name="receiverBank" type="java.lang.String">
+            <column name="RECEIVER_BANK" length="100">
+            </column>
+        </property>
+         <property name="receiverAcount" type="java.lang.String">
+            <column name="RECEIVER_ACOUNT" length="100">
+            </column>
+        </property>
+        <property name="token" type="java.lang.String">
+            <column name="TOKEN" length="100" not-null="true">
+            </column>
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

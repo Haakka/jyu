@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+	
+	<!-- dao配置 -->
+    <bean id="orderDao" class="com.crm.dao.orders.OrderDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+     <bean id="contractDao" class="com.crm.dao.orders.ContractDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+ 	<!-- mgr配置 -->
+    <bean id="orderService" class="com.crm.service.orders.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"></property>
+    </bean>
+     <bean id="contractService" class="com.crm.service.orders.ContractServiceImpl">
+        <property name="contractDao" ref="contractDao"></property>
+    </bean>
+    
+    <!-- action配置 -->
+    <bean id="orderAction" class="com.crm.web.cusman.OrderAction" scope="prototype">
+         <property name="orderService" ref="orderService"></property>
+         <property name="usersManagerDao" ref="usersManagerDao"></property>
+         <property name="sysParamService" ref="sysParamService"></property>
+         <property name="contractService" ref="contractService"></property>
+          <property name="productService" ref="productService"></property>
+    </bean>
+    <bean id="contractAction" class="com.crm.web.cusman.ContractAction" scope="prototype">
+         <property name="contractService" ref="contractService"></property>
+         <property name="consumerService" ref="consumerService"></property>
+    </bean>
+
+</beans>

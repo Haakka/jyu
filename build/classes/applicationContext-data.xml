@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+	
+	<!-- dao配置 -->
+    <bean id="positionDao" class="com.crm.dao.data.PositionDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="departmentDao" class="com.crm.dao.data.DepartmentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+ 	<!-- mgr配置 -->
+    <bean id="positionService" class="com.crm.service.data.PositionServiceImpl">
+        <property name="positionDao" ref="positionDao"></property>
+    </bean>
+    <bean id="departmentService" class="com.crm.service.data.DepartmentServiceImpl">
+        <property name="departmentDao" ref="departmentDao"></property>
+    </bean>
+    
+    <!-- action配置 -->
+    <bean id="positionAction" class="com.crm.web.cusman.PositionAction" scope="prototype">
+         <property name="positionService" ref="positionService"></property>
+    </bean>
+    <bean id="departmentAction" class="com.crm.web.cusman.DepartmentAction" scope="prototype">
+    	 <property name="usersManagerDao" ref="usersManagerDao"></property>
+         <property name="departmentService" ref="departmentService"></property>
+    </bean>
+
+</beans>

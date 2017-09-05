@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.crm.entity.MailReceive" table="crm_mail_receive">
+        
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+         <many-to-one name="receiver" class="com.crm.entity.Users" fetch="select" lazy="false">
+        	<column name="RECEIVER">
+        		<comment>接收者 FK</comment>
+        	</column>
+        </many-to-one>
+        <many-to-one name="mailId" class="com.crm.entity.PersonMail" fetch="select" lazy="false">
+        	<column name="MAIL_ID">
+        		<comment>邮件 FK</comment>
+        	</column>
+        </many-to-one>
+         <property name="isDel" type="java.lang.String">
+            <column name="IS_DEL" length="1"  not-null="true" />
+        </property>
+         <property name="isView" type="java.lang.String">
+            <column name="IS_VIEW" length="1" not-null="true" />
+        </property>
+        <property name="token" type="java.lang.String">
+            <column name="TOKEN" length="100" not-null="true">
+            </column>
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>
